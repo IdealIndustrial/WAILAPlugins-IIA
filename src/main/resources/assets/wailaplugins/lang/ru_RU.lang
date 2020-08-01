@@ -60,6 +60,12 @@ wp.config.Forestry.power=Показывать энергию
 wp.config.Forestry.sapling=Показывать саженец
 
 
+## Gregtech 5U
+
+wp.config.Gregtech5U.fluidFilter=Отображение информации жидкостного фильтра
+wp.config.Gregtech5U.transformer=Отображать информацию трансформатора
+wp.config.Gregtech5U.machineFacing=Отображать информацию о лицевой части машины
+
 ## Magical Crops ##
 
 wp.config.magicalcrops.showHover=Показывать парящий предмет

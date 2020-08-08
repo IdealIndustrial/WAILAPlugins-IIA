@@ -13,3 +13,7 @@
 /.gradle
 /.settings
 /libs
+/out
+*.iml
+*.ipr
+*iws

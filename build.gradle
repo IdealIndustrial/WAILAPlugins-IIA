@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url = "https://files.minecraftforge.net/maven" }
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies { 
@@ -28,6 +28,13 @@ minecraft {
 	replace "${toReplace}", "required-after:Forge@[${forge_version},);required-after:endercore@[${endercore_version},);required-after:Waila;"
     replaceIn "WailaPlugins.java"
 }
+
+configurations {
+    provided
+    embedded
+    compile.extendsFrom provided, embedded
+}
+
 
 repositories {
     maven { // ttCore
@@ -56,7 +63,8 @@ dependencies {
     compile "com.enderio.core:EnderCore:${endercore_version}:dev"
 	compile "mcp.mobius.waila:Waila:${WAILA_version}"
     compile "net.sengir.forestry:forestry_1.7.10:${forestry_version}:dev"
-    compile "info.tehnut.resourcefulcrops:ResourcefulCrops:${rcrops_version}:deobf"
+    //compile "info.tehnut.resourcefulcrops:ResourcefulCrops:${rcrops_version}:deobf"
+	provided fileTree(dir: 'lib', include: '*.jar')
 }
 
 
@@ -107,7 +115,7 @@ task clearOld(type: Delete) {
     delete 'libs'
 }
 
-task downloadGregTech(type: Download) {
+/*task downloadGregTech(type: Download) {
     dest new File(buildDir, "gregtech-${gregtech_version}-dev.jar")
 
     onlyIf {
@@ -116,7 +124,7 @@ task downloadGregTech(type: Download) {
     src "http://jenkins.usrv.eu:8080/job/Gregtech-5-Unofficial/${gregtech_jenkinsbuild}/artifact/build/libs/gregtech-${gregtech_version}-dev.jar"
     mustRunAfter "deobfBinJar"
     mustRunAfter "repackMinecraft"
-}
+}*/
 
 task downloadIC2(type: Download) {
     dest new File(buildDir, "industrialcraft-${ic2_version}-dev.jar")
@@ -129,12 +137,12 @@ task downloadIC2(type: Download) {
     mustRunAfter "repackMinecraft"
 }
 
-task downloadLibs(dependsOn: [downloadZip, downloadGregTech, downloadIC2], type: Copy) {
+task downloadLibs(dependsOn: [downloadZip, downloadIC2], type: Copy) {
     from zipTree(downloadZip.dest)
     into file('libs')
 
-    from downloadGregTech.dest
-    into file('libs')
+    //from downloadGregTech.dest
+    //into file('libs')
 
     from downloadIC2.dest
     into file('libs')
